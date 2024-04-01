@@ -1,4 +1,6 @@
 import { Route, Routes } from "react-router-dom";
+import React, { useEffect } from 'react';
+import useAuthStore from './store/authStore'; 
 import PaginaAcceso from "./pages/PaginaAcceso";
 import PaginaRegistro from "./pages/PaginaRegistro";
 import Tablero from "./pages/Tablero";
@@ -6,6 +8,20 @@ import NotFound from "./pages/NotFound";
 import Pais from "./pages/GestionPais";
 
 function App() {
+  const { checkAuth, isAuth } = useAuthStore(state => ({
+    checkAuth: state.checkAuth,
+    isAuth: state.isAuth
+  }));
+
+  useEffect(() => {
+    checkAuth();
+  }, [checkAuth]);
+
+  useEffect(() => {
+    console.log("User is authenticated:", isAuth);
+  }, [isAuth]);
+
+
   return (
     <Routes>
       <Route path="/" element={<h1>home</h1>} />
