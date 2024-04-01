@@ -10,8 +10,8 @@ const LayoutAdmin = ({children}) => {
       <div className="xl:col-span-5">
         <Header />
         <div className="h-[90vh] overflow-y-scroll p-8">
-        </div>
         {children}
+        </div>
       </div>
     </div>
   );

@@ -15,7 +15,7 @@ import { FaUser } from "react-icons/fa";
 
 const Header = () => {
   return (
-    <header className="h-[7vh] md:h-[10vh] bg-primary border-b border-secondary-100 p-8 flex items-center justify-end">
+    <header className="h-[7vh] md:h-[10vh] bg-blue-950 border-b border-secondary-100 p-8 flex items-center justify-end">
       <nav className="flex items-center gap-2">
         <Menu
           menuButton={

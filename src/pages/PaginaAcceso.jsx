@@ -27,7 +27,7 @@ function PaginaAcceso() {
       {loginErrors &&
           loginErrors.map((err) => (
             <p
-              className="text-red-900 font-sans font-bold text-center space"
+              className="text-red-900 font-sans font-bold text-center"
             >
               {err}
             </p>
@@ -49,7 +49,7 @@ function PaginaAcceso() {
               name="email"
               type="email"
               autoComplete="email"
-              placeholder="Por favor, ingrese su correo electrónico"
+              placeholder="Por favor, indique su correo electrónico"
               {...register("email", {
                 required: true,
               })}
@@ -75,10 +75,10 @@ function PaginaAcceso() {
               name="password"
               type="password"
               autoComplete="current-password"
-              placeholder="Por favor, ingrese su contraseña"
+              placeholder="Por favor, indique su contraseña"
               {...register("password", {
                 required: true,
-              })}br
+              })}
             />
             {errors.password && (
             <p className="text-red-500">La contraseña es requerida</p>

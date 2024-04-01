@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { RiLogoutCircleRLine, RiMenu3Line, RiCloseLine, RiArrowDownSLine, RiArrowUpSLine, RiFileUserLine, RiEarthLine } from 'react-icons/ri';
-import { FaAmazonPay, FaBusinessTime, FaChartPie, FaFileExcel, FaFileExport, FaUser } from "react-icons/fa";
+import {FaBusinessTime, FaFileExcel} from "react-icons/fa";
 
 
 
@@ -17,16 +17,16 @@ const Sidebar = () => {
           name: 'Asistencia',
           icon: FaFileExcel,
           submenu: [
-            { name: 'Información General', path: '/' },
-            { name: 'Información Específica', path: '/' },
+            { name: 'Información General', path: '/tablero' },
+            { name: 'Información Específica', path: '/tablero' },
           ],
         },
         {
           name: 'Empleado',
           icon: RiFileUserLine, 
           submenu: [
-            { name: 'Información General', path: '/' },
-            { name: 'Información Específica', path: '/' },
+            { name: 'Información General', path: '/tablero' },
+            { name: 'Información Específica', path: '/tablero' },
           ],
         },
       ],
@@ -46,10 +46,10 @@ const Sidebar = () => {
           name: 'Ubicación',
           icon: RiEarthLine, 
           submenu: [
-            { name: 'País', path: '/' },
-            { name: 'Estado', path: '/' },
-            { name: 'Municipio', path: '/' },
-            { name: 'Parroquia', path: '/' },
+            { name: 'País', path: '/pais' },
+            { name: 'Estado', path: '/pais' },
+            { name: 'Municipio', path: '/pais' },
+            { name: 'Parroquia', path: '/pais' },
           ],
         },
       ],
@@ -78,7 +78,7 @@ const Sidebar = () => {
     <>
     {/* SIDEBAR CLASSNAME */}
       <div
-        className={`xl:h-[100vh] overflow-y-scroll fixed xl:static w-[80%] md:w-[40%] lg:w-[30%] xl:w-auto h-full top-0 bg-slate-300 p-4 flex flex-col justify-between z-50 ${
+        className={`xl:h-[100vh] overflow-y-scroll fixed xl:static w-[80%] md:w-[40%] lg:w-[30%] xl:w-auto h-full top-0 bg-blue-50 p-4 flex flex-col justify-between z-50 ${
           showMenu ? 'left-0' : '-left-full'
         } transition-all`}
       >

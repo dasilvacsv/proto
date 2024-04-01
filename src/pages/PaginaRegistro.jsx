@@ -18,7 +18,7 @@ function PaginaRegistro() {
   const onSubmit = handleSubmit(async (data) => {
     const user = await signup(data);
     if (user !== false) {
-      navigate("google.com");
+      navigate("/acceso");
     }
   });
 
@@ -28,7 +28,7 @@ function PaginaRegistro() {
       {signupErrors &&
           signupErrors.map((err) => (
             <p
-            className="text-red-900 font-sans font-bold text-center space"
+            className="text-red-900 font-sans font-bold text-center "
             >
               {err}
             </p>
@@ -49,7 +49,7 @@ function PaginaRegistro() {
               id="nombre"
               name="nombre"
               type="text"
-              placeholder="Por favor, introduzca su nombre"
+              placeholder="Por favor, indique su nombre"
               {...register("username", {
                 required: true,
               })}
@@ -66,7 +66,7 @@ function PaginaRegistro() {
               name="email"
               type="email"
               autoComplete="email"
-              placeholder="Por favor, introduzca su email"
+              placeholder="Por favor, indique su email"
               {...register("email", {
                 required: true,
               })}
@@ -92,7 +92,7 @@ function PaginaRegistro() {
               name="password"
               type="password"
               autoComplete="current-password"
-              placeholder="Por favor, introduzca una contraseña segura"
+              placeholder="Por favor, indique una contraseña segura"
               {...register("password", {
                 required: true,
               })}
