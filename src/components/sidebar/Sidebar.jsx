@@ -17,7 +17,7 @@ const Sidebar = () => {
           name: 'Asistencia',
           icon: FaFileExcel,
           submenu: [
-            { name: 'Información General', path: '/tablero' },
+            { name: 'Información', path: '/tablero' },
             { name: 'Información Específica', path: '/tablero' },
           ],
         },
@@ -59,6 +59,14 @@ const Sidebar = () => {
       items: [
         {
           name: 'Usuarios',
+          icon: FaBusinessTime,
+          submenu: [
+            { name: 'Gestión', path: '/' },
+            { name: 'Registro', path: '/' },
+          ],
+        },
+        {
+          name: 'Usuario',
           icon: FaBusinessTime,
           submenu: [
             { name: 'Gestión', path: '/' },

@@ -1,4 +1,3 @@
-// store/authStore.js
 import {create} from 'zustand';
 import axios from '../api/axios';
 import Cookie from 'js-cookie';
