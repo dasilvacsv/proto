@@ -1,35 +1,76 @@
-import React from 'react';
-import { useForm } from 'react-hook-form';
+import React, { useEffect, useState } from "react";
+import { useForm, Controller } from "react-hook-form";
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
 import useEmployeeStore from '@/store/empleadoStore.js'; 
+import useLocationStore from "@/store/locationStore";
 
-const FormularioDatosTrabajo = ({ alCrearEmpleado }) => {
-    const { register, handleSubmit, formState: { errors } } = useForm();
-    const actualizarEmpleado = useEmployeeStore((state) => state.registrarEmpleado);
-  
-  const onSubmit = async (data) => {
-    const nuevoEmpleado = actualizarEmpleado(data);
-    if (nuevoEmpleado && nuevoEmpleado.Id_empleado) {
-      alCrearEmpleado(nuevoEmpleado.Id_empleado);
-    } else {
-      // Manejo de errores, puedes mostrar un mensaje al usuario aquí.
+
+const FormularioDatosTrabajo =  ({ idEmpleado }) => {
+  const { register, control, handleSubmit, setValue, formState: { errors } } = useForm();
+  const { actualizarEmpleado } = useEmployeeStore(state => state);
+  const { departamentos, cargos, cargarDepartamentos, cargarCargosPorDepartamentoId } = useLocationStore();
+
+  useEffect(() => {
+    cargarDepartamentos();
+  }, []);
+
+  const handleSelectChange = (name, value) => {
+    setValue(name, value);
+    if (name === "departamento") {
+      cargarCargosPorDepartamentoId(value);
+      setValue("cargo", "");
     }
   };
-  
+
+  const onSubmit = async (data) => {
+    console.log(
+      `Registrando datos de contacto para el empleado ID: ${idEmpleado}`,
+      data
+    );
+    await actualizarEmpleado(idEmpleado, data);
+  };
+    
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <div>
-        {/* Manejar la Selección de Departamento para enviar al Cargo con una FK */}
-        <Label htmlFor="cargo">Cargo</Label>
-        <Input
-          id="cargo"
-          type="text"
-          {...register('Id_cargos_id', { required: 'Este campo es requerido.' })}
+     
+     <div>
+        <Label htmlFor="departamento">Departamento</Label>
+        <Controller
+          name="departamento"
+          control={control}
+          render={({ field }) => (
+            <select {...field} onChange={(e) => handleSelectChange("departamento", e.target.value)}>
+              <option value="">Seleccione un Departamento</option>
+              {departamentos.map((departamento) => (
+                <option key={departamento.id_departamento} value={departamento.id_departamento}>
+                  {departamento.nombre_dep ? departamento.nombre_dep.trim() : ''}
+                </option>
+              ))}
+            </select>
+          )}
         />
-        {errors.Id_cargos_id && <p>{errors.Id_cargos_id.message}</p>}
       </div>
+
+      <div>
+        <Label htmlFor="cargo">Cargo</Label>
+        <Controller
+          name="cargo"
+          control={control}
+          render={({ field }) => (
+            <select {...field} onChange={(e) => handleSelectChange("cargo", e.target.value)}>
+              <option value="">Seleccione un Cargo</option>
+              {cargos.map((cargo) => (
+                <option key={cargo.id_cargo} value={cargo.id_cargo}>
+                  {cargo.nombre_car ? cargo.nombre_car.trim() : ''}
+                </option>
+              ))}
+            </select>
+          )}
+        />
+      </div>
+
       <div>
         <Label htmlFor="tipopersonal">Tipo de Personal</Label>
         <Input
@@ -43,7 +84,7 @@ const FormularioDatosTrabajo = ({ alCrearEmpleado }) => {
         <Label htmlFor="jornada">Tipo de Jornada</Label>
         <Input
           id="jornada"
-          type="email"
+          type="text"
           {...register('Jornada_e', { required: 'Este campo es requerido.' })}
         />
       </div>

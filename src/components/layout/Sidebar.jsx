@@ -62,17 +62,9 @@ const Sidebar = () => {
           icon: FaBusinessTime,
           submenu: [
             { name: 'Gestión', path: '/' },
-            { name: 'Registro', path: '/' },
+            { name: 'Registro', path: '/registro' },
           ],
         },
-        {
-          name: 'Usuario',
-          icon: FaBusinessTime,
-          submenu: [
-            { name: 'Gestión', path: '/' },
-            { name: 'Registro', path: '/' },
-          ],
-        }
       ],
     },
   ];

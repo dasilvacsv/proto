@@ -79,12 +79,7 @@ function PaginaAcceso() {
           </div>
           <Button className="w-full btn-primary" type="submit">Acceder</Button>
         </form>
-        <div className="text-center text-sm">
-          <p>¿No se encuentra usted registrado? </p>
-          <Link to="/registro" className="font-medium text-indigo-600 hover:text-indigo-500">
-            Registrarse en la aplicación
-          </Link>
-        </div>
+        
       </LayoutAuth>
     </>
   );

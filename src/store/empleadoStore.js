@@ -21,21 +21,21 @@ const useEmployeeStore = create((set) => ({
       return null;  // Manejo de errores, retorna null si hay un error
     }
   },
-
-  actualizarEmpleado: async (datosEmpleado) => {
+  
+  actualizarEmpleado: async (idEmpleado, datosActualizacion) => {
     set({ cargando: true });
     try {
-      const respuesta = await axios.put('/empleado', datosEmpleado);
+      const respuesta = await axios.patch(`/empleado/${idEmpleado}`, datosActualizacion);
       set({ empleado: respuesta.data, errores: null, cargando: false });
-      return respuesta.data;  // Retorna los datos del empleado recién creado
+      console.log("Empleado actualizado con éxito:", respuesta.data);
+      return respuesta.data;  // Retorna los datos del empleado actualizado
     } catch (error) {
-      console.error("Error al registrar el empleado:", error.response?.data || error.message);
-      set({ errores: error.response.data, cargando: false });
+      console.error("Error al actualizar el empleado:", error.response?.data || error.message);
+      set({ errores: error.response?.data, cargando: false });
       return null;  // Manejo de errores, retorna null si hay un error
     }
   },
-  // Acciones adicionales para obtener, actualizar y eliminar empleados
-  // ...
+
 
   limpiarErrores: () => set({ errores: null })
 }));

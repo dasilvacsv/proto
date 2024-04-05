@@ -7,6 +7,7 @@ import Tablero from "./pages/Tablero";
 import NotFound from "./pages/NotFound";
 import Pais from "./pages/GestionPais";
 import GestionEmpleados from "./pages/GestionEmpleados";
+import DatosEmpleado from "./pages/empleados/DatosEmpleado";
 
 function App() {
   const { checkAuth, isAuth } = useAuthStore(state => ({
@@ -31,6 +32,7 @@ function App() {
       <Route path="/tablero" element={<Tablero />} />
       <Route path="/pais" element={<Pais />} />
       <Route path="/empleados" element={<GestionEmpleados />} />
+      <Route path="/empleados2" element={<DatosEmpleado />} />
 
       <Route path="*" element={<NotFound />} />
     </Routes>

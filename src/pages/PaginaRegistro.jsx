@@ -2,10 +2,12 @@ import React, { useEffect } from 'react';
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import LayoutAuth from "@/layouts/LayoutAuth";
+import LayoutAdmin from "@/layouts/LayoutAdmin";
 import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import useAuthStore from '@/store/authStore'; 
+import { Card } from "@/components/ui/card";
+
 
 function PaginaRegistro() {
   const navigate = useNavigate();
@@ -36,7 +38,24 @@ function PaginaRegistro() {
 
   return (
     <>
-      <LayoutAuth>
+      <LayoutAdmin>
+      <div className="flex flex-1 items-center justify-center p-4">
+        <Card className="max-w-md w-full space-y-2 p-8">
+        <h1 className="text-center font-semibold">Bienvenido a la Aplicación Web del Complejo Industrial Fábrica de Fábricas Hugo Chávez Frías</h1>
+
+          <div className="flex justify-center items-center">
+            <img
+              src="/ff.png"
+              className="w-24 transform transition duration-300 ease-in-out hover:scale-110"
+              alt="Logo"
+            />
+            <img
+              src="/cvg.png"
+              className="w-24 transform transition duration-300 ease-in-out hover:scale-110"
+              alt="Logo"
+            />
+          </div>
+          
         {signupErrors && signupErrors.map((err, index) => (
           <p key={index} className="text-red-900 font-sans font-bold text-center">
             {err}
@@ -99,7 +118,10 @@ function PaginaRegistro() {
             Acceder a la Aplicación
           </Link>
         </div>
-      </LayoutAuth>
+
+        </Card>
+      </div>
+      </LayoutAdmin>
     </>
   );
 }
