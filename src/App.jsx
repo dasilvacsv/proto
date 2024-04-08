@@ -6,8 +6,12 @@ import PaginaRegistro from "./pages/PaginaRegistro";
 import Tablero from "./pages/Tablero";
 import NotFound from "./pages/NotFound";
 import Pais from "./pages/GestionPais";
-import GestionEmpleados from "./pages/GestionEmpleados";
 import DatosEmpleado from "./pages/empleados/DatosEmpleado";
+import DatosPrimordiales from "./pages/empleados/DatosPrimordiales";
+import DatosUniformes from "./pages/empleados/DatosUniformes";
+import DatosTrabajo from "./pages/empleados/DatosTrabajo";
+import DatosCaracteristicos from "./pages/empleados/DatosCaracteristicos";
+import GestionUsuariosBio from "./pages/biometrico/GestionUsuariosBio";
 
 function App() {
   const { checkAuth, isAuth } = useAuthStore(state => ({
@@ -31,8 +35,15 @@ function App() {
       <Route path="/registro" element={<PaginaRegistro />} />
       <Route path="/tablero" element={<Tablero />} />
       <Route path="/pais" element={<Pais />} />
-      <Route path="/empleados" element={<GestionEmpleados />} />
+      {/* Empleados routes */}
+      <Route path="/empleados" element={<DatosPrimordiales />} />
       <Route path="/empleados2" element={<DatosEmpleado />} />
+      <Route path="/empleados3" element={<DatosUniformes />} />
+      <Route path="/empleados4" element={<DatosTrabajo />} />
+      <Route path="/empleados5" element={<DatosCaracteristicos />} />
+      {/* Biometrico routes */}
+      <Route path="/biometrico" element={<GestionUsuariosBio />} />
+
 
       <Route path="*" element={<NotFound />} />
     </Routes>

@@ -4,8 +4,11 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import useEmployeeStore from "@/store/empleadoStore.js";
+import { useNavigate } from "react-router-dom";
+
 
 const FormularioDatosUniformes = ({ idEmpleado }) => {
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
@@ -21,9 +24,13 @@ const FormularioDatosUniformes = ({ idEmpleado }) => {
       data
     );
     await actualizarEmpleado(idEmpleado, data);
+    navigate('/empleados4', { state: { id_empleado: idEmpleado } });
+
   };
 
   return (
+    <div className="bg-slate-200 p-8 rounded-xl mb-4">
+
     <form onSubmit={handleSubmit(onSubmit)}>
       <div>
         <Label htmlFor="pantalon">Talla de Pantalón</Label>
@@ -55,6 +62,7 @@ const FormularioDatosUniformes = ({ idEmpleado }) => {
 
       <Button type="submit">Registrar</Button>
     </form>
+    </div>
   );
 };
 

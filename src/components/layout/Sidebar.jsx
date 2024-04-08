@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { RiLogoutCircleRLine, RiMenu3Line, RiCloseLine, RiArrowDownSLine, RiArrowUpSLine, RiFileUserLine, RiEarthLine } from 'react-icons/ri';
-import {FaBusinessTime, FaFileExcel} from "react-icons/fa";
+import {FaBusinessTime, FaFileExcel, FaFingerprint, FaUsers} from "react-icons/fa";
 
 
 
@@ -61,8 +61,30 @@ const Sidebar = () => {
           name: 'Usuarios',
           icon: FaBusinessTime,
           submenu: [
-            { name: 'Gestión', path: '/' },
+            { name: 'Gestión', path: '/empleados' },
             { name: 'Registro', path: '/registro' },
+          ],
+        },
+      ],
+    },
+    {
+      label: 'Biométrico', 
+      items: [
+        {
+          name: 'Usuarios',
+          icon: FaFingerprint,
+          submenu: [
+            { name: 'Registro', path: '/biometrico' },
+            { name: 'Lista', path: '/registro' },
+          ],
+        },
+        {
+          name: 'Asistencia',
+          icon: FaUsers,
+          submenu: [
+            { name: 'Tiempo Real', path: '/biometrico' },
+            { name: 'Lista', path: '/biometrico' },
+            { name: 'Manual', path: '/registro' },
           ],
         },
       ],

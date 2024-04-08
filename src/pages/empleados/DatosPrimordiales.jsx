@@ -1,7 +1,7 @@
 import LayoutAdmin from "@/layouts/LayoutAdmin";
 import FormularioDatosPrimordiales from "@/components/Empleado/DatosPrimordialesForm";
 
-function GestionEmpleados() {
+function DatosPrimordiales() {
   return (
     <>
       <LayoutAdmin>
@@ -12,4 +12,4 @@ function GestionEmpleados() {
   );
 }
 
-export default GestionEmpleados;
+export default DatosPrimordiales;

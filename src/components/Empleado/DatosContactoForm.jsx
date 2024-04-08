@@ -5,8 +5,10 @@ import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";3
 import useEmployeeStore from "@/store/empleadoStore.js";
 import useLocationStore from "@/store/locationStore";
+import { useNavigate } from "react-router-dom";
 
 const FormularioDatosContacto = ({ idEmpleado }) => {
+  const navigate = useNavigate();
   const {
     register,
     control,
@@ -60,9 +62,12 @@ const FormularioDatosContacto = ({ idEmpleado }) => {
   const onSubmit = async (data) => {
     await actualizarEmpleado(idEmpleado, data);
     console.log(`Datos registrados para el empleado ID: ${idEmpleado}`, data);
+    navigate("/empleados3", { state: { id_empleado: idEmpleado } });
   };
 
   return (
+    <div className="bg-slate-200 p-8 rounded-xl mb-4">
+
     <form onSubmit={handleSubmit(onSubmit)}>
       {/* Campos de entrada */}
 
@@ -114,6 +119,7 @@ const FormularioDatosContacto = ({ idEmpleado }) => {
           control={control}
           render={({ field }) => (
             <select
+            className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 mt-1 mb-1 "
               {...field}
               onChange={(e) => handleSelectChange("pais", e.target.value)}
             >
@@ -135,6 +141,7 @@ const FormularioDatosContacto = ({ idEmpleado }) => {
           control={control}
           render={({ field }) => (
             <select
+            className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 mt-1 mb-1"
               {...field}
               onChange={(e) => handleSelectChange("estado", e.target.value)}
             >
@@ -155,6 +162,7 @@ const FormularioDatosContacto = ({ idEmpleado }) => {
           control={control}
           render={({ field }) => (
             <select
+            className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 mt-1 mb-1"
               {...field}
               onChange={(e) => handleSelectChange("municipio", e.target.value)}
             >
@@ -168,13 +176,14 @@ const FormularioDatosContacto = ({ idEmpleado }) => {
           )}
         />
       </div>
-      <div>
+      <div className="mb-2">
         <Label htmlFor="parroquia">Parroquia</Label>
         <Controller
           name="parroquia"
           control={control}
           render={({ field }) => (
             <select
+            className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 mt-1 mb-1"
               {...field}
               onChange={(e) => handleSelectChange("parroquia", e.target.value)}
             >
@@ -189,9 +198,12 @@ const FormularioDatosContacto = ({ idEmpleado }) => {
         />
       </div>
 
-
+      <div className="flex justify-center sm:justify-normal">
+          
       <Button type="submit">Registrar</Button>
+      </div>
     </form>
+    </div>
   );
 };
 

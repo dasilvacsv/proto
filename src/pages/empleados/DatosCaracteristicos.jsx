@@ -1,20 +1,21 @@
 import LayoutAdmin from "@/layouts/LayoutAdmin";
 import { useLocation } from "react-router-dom";
-import FormularioDatosContacto from "@/components/Empleado/DatosContactoForm";
+import React, { useEffect } from "react";
+import FormularioDatosCaracteristicos from "@/components/Empleado/DatosCaracteristicos";
 
-function DatosEmpleado() {
+function DatosCaracteristicos() {
   const location = useLocation();
   const { id_empleado } = location.state || {}; // Usa un objeto vacío como valor predeterminado para prevenir errores
-
 
   return (
     <>
       <LayoutAdmin>
-        <h1>ID del Empleado: {id_empleado}</h1>
-        <FormularioDatosContacto idEmpleado={id_empleado} />
+        <div className="py-20">
+          <FormularioDatosCaracteristicos idEmpleado={id_empleado} />
+        </div>
       </LayoutAdmin>
     </>
   );
 }
 
-export default DatosEmpleado;
+export default DatosCaracteristicos;

@@ -20,6 +20,8 @@ const FormularioDatosCaracteristicos = ({ idEmpleado }) => {
     };
 
   return (
+    <div className="bg-slate-200 p-8 rounded-xl mb-4">
+
     <form onSubmit={handleSubmit(onSubmit)}>
       <div>
         <Label htmlFor="geoubicacion">Ubicación Geográfica</Label>
@@ -52,6 +54,7 @@ const FormularioDatosCaracteristicos = ({ idEmpleado }) => {
 
       <Button type="submit">Registrar</Button>
     </form>
+    </div>
   );
 };
 
