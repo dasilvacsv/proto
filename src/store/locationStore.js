@@ -12,22 +12,34 @@ const useLocationStore = create((set) => ({
   cargando: false,
   error: null,
 
-  // Cargar todos los países
   cargarPaises: async () => {
     set({ cargando: true });
     try {
-      const respuesta = await axios.get('/pais');
-      console.log(respuesta.data); // Agrega esta línea para depurar
+      const respuesta = await axios.get('ubicacion/pais');
+      console.log(respuesta.data); 
       set({ paises: respuesta.data, cargando: false });
     } catch (error) {
       set({ error: error.message, cargando: false });
     }
   },
 
+  cargarEstados: async () => {
+    set({ cargando: true });
+    try {
+      const respuesta = await axios.get('ubicacion/estado');
+      console.log(respuesta.data); 
+      set({ estadps: respuesta.data, cargando: false });
+    } catch (error) {
+      set({ error: error.message, cargando: false });
+    }
+  },
+
+
+
   cargarEstadosPorPaisId: async (paisId) => {
     set({ cargando: true });
     try {
-      const respuesta = await axios.get(`/estado/by-pais/${paisId}`);
+      const respuesta = await axios.get(`ubicacion/estado/by-pais/${paisId}`);
       console.log(respuesta.data);
       set({ estados: respuesta.data, cargando: false });
     } catch (error) {
@@ -38,7 +50,7 @@ const useLocationStore = create((set) => ({
   cargarMunicipiosPorEstadoId: async (estadoId) => {
     set({ cargando: true });
     try {
-      const respuesta = await axios.get(`municipio/by-estado/${estadoId}`);
+      const respuesta = await axios.get(`ubicacion/municipio/by-estado/${estadoId}`);
       console.log(respuesta.data);
       set({ municipios: respuesta.data, cargando: false });
     } catch (error) {
@@ -50,7 +62,7 @@ const useLocationStore = create((set) => ({
   cargarParroquiasPorMunicipioId: async (municipioId) => {
     set({ cargando: true });
     try {
-      const respuesta = await axios.get(`parroquia/by-municipio/${municipioId}`);
+      const respuesta = await axios.get(`ubicacion/parroquia/by-municipio/${municipioId}`);
       console.log(respuesta.data);
       set({ parroquias: respuesta.data, cargando: false });
     } catch (error) {
@@ -62,7 +74,7 @@ const useLocationStore = create((set) => ({
   cargarDepartamentos: async () => {
     set({ cargando: true });
     try {
-      const respuesta = await axios.get('/departamento');
+      const respuesta = await axios.get('dpto/departamento');
       console.log(respuesta.data); // Agrega esta línea para depurar
       set({ departamentos: respuesta.data, cargando: false });
     } catch (error) {
@@ -75,7 +87,7 @@ const useLocationStore = create((set) => ({
   cargarCargosPorDepartamentoId: async (departamentoId) => {
     set({ cargando: true });
     try {
-      const respuesta = await axios.get(`/cargo/by-departamento/${departamentoId}`);
+      const respuesta = await axios.get(`dpto/cargo/by-departamento/${departamentoId}`);
       console.log(respuesta.data);
       set({ cargos: respuesta.data, cargando: false });
     } catch (error) {

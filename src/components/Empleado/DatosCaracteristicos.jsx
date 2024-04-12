@@ -4,6 +4,7 @@ import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
 import useEmployeeStore from '@/store/empleadoStore.js'; 
+import FormField from './FormField';
 
 const FormularioDatosCaracteristicos = ({ idEmpleado }) => {
     const { register, handleSubmit, formState: { errors } } = useForm();
@@ -23,35 +24,28 @@ const FormularioDatosCaracteristicos = ({ idEmpleado }) => {
     <div className="bg-slate-200 p-8 rounded-xl mb-4">
 
     <form onSubmit={handleSubmit(onSubmit)}>
-      <div>
-        <Label htmlFor="geoubicacion">Ubicación Geográfica</Label>
-        <Input
-          id="geoubicacion"
-          type="text"
-          {...register('Geo_ubicacion', { required: 'Este campo es requerido.' })}
-        />
-        {errors.Geo_ubicacion && <p>{errors.Geo_ubicacion.message}</p>}
-      </div>
-      <div>
-        <Label htmlFor="regfoto">Registro Fotográfico del Empleado</Label>
-        <Input
-          id="regfoto"
-          type="text"
-          {...register('Reg_fotog_e', { required: 'Este campo es requerido.' })}
-        />
-        {errors.Reg_fotog_e && <p>{errors.Reg_fotog_e.message}</p>}
-      </div>
-      <div>
-        {/* Link a Registro Biométrico */}
-        <Label htmlFor="regbio">Registro Biométrico</Label>
-        <Input
-          id="regbio"
-          type="text"
-          {...register('Reg_biometrico_e', { required: 'Este campo es requerido.' })}
-        />
-      </div>
-      {errors.Reg_biometrico_e && <p>{errors.Reg_biometrico_e.message}</p>}
-
+      <FormField
+        label="Ubicación Geográfica"
+        type="text"
+        id="geo_ubicacion"
+        register={register}
+        errors={errors}
+      />
+      <FormField
+        label="Registro Fotográfico del Empleado"
+        type="text"
+        id="reg_fotog_e"
+        register={register}
+        errors={errors}
+      />
+      <FormField
+        label="Registro Biométrico"
+        type="text"
+        id="reg_biometrico_e"
+        register={register}
+        errors={errors}
+      />
+      
       <Button type="submit">Registrar</Button>
     </form>
     </div>

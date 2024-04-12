@@ -10,7 +10,7 @@ const useAuthStore = create((set, get) => ({
 
   signup: async (data) => {
     try {
-      const res = await axios.post('/registro', data);
+      const res = await axios.post('/usuario/registro', data);
       set({ user: res.data, isAuth: true, errors: null });
       return null; 
     } catch (error) {
@@ -22,8 +22,11 @@ const useAuthStore = create((set, get) => ({
 
   signin: async (data) => {
     try {
-      const res = await axios.post('/acceso', data);
-      set({ user: res.data, isAuth: true, errors: null });
+      const res = await axios.post('auth/acceso', data);
+      if (res.data && res.data.access_token) {
+        localStorage.setItem('token', res.data.access_token); 
+        set({ user: res.data.user, isAuth: true, errors: null }); 
+      }
       return res.data; 
     } catch (error) {
       const errorMessage = Array.isArray(error.response.data) ? error.response.data : [error.response.data.message];
@@ -33,16 +36,19 @@ const useAuthStore = create((set, get) => ({
 
   signout: async () => {
     await axios.post('/desconexion');
-    set({ user: null, isAuth: false });
+    localStorage.removeItem('token');
+    set({ user: null, isAuth: false, errors: null });
   },
 
   checkAuth: async () => {
-    if (Cookie.get('token')) {
+    const token = localStorage.getItem('token');
+    if (token) {
       try {
-        const res = await axios.get('/perfil');
+        const res = await axios.get('auth/perfil');
         set({ user: res.data, isAuth: true, loading: false });
       } catch (error) {
-        console.log(error);
+        console.error(error);
+        localStorage.removeItem('token'); 
         set({ isAuth: false, user: null, loading: false });
       }
     } else {

@@ -50,30 +50,30 @@ function PaginaAcceso() {
         </div>
         <form className="space-y-5" onSubmit={onSubmit}>
           <div className="space-y-2">
-            <Label htmlFor="email">Correo Electrónico</Label>
+            <Label htmlFor="id_correo">Correo Electrónico</Label>
             <Input
               className="input-field"
-              id="email"
-              name="email"
+              id="id_correo"
+              name="id_correo"
               type="email"
               autoComplete="email"
               placeholder="Por favor, indique su correo electrónico"
-              {...register("email", { required: true })}
+              {...register("id_correo", { required: true })}
             />
             {formErrors.email && <p className="text-red-500">El correo electrónico es requerido</p>}
           </div>
           <div className="space-y-2">
             <div className="flex justify-between">
-              <Label htmlFor="password">Contraseña</Label>
+              <Label htmlFor="clave_u">Contraseña</Label>
             </div>
             <Input
               className="input-field"
-              id="password"
+              id="clave_u"
               name="password"
               type="password"
               autoComplete="current-password"
               placeholder="Por favor, indique su contraseña"
-              {...register("password", { required: true })}
+              {...register("clave_u", { required: true })}
             />
             {formErrors.password && <p className="text-red-500">La contraseña es requerida</p>}
           </div>

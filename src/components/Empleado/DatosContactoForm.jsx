@@ -2,10 +2,11 @@ import React, { useEffect, useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { Label } from "@/components/ui/label";3
+import { Label } from "@/components/ui/label"; 3
 import useEmployeeStore from "@/store/empleadoStore.js";
 import useLocationStore from "@/store/locationStore";
 import { useNavigate } from "react-router-dom";
+import FormField from "./FormField";
 
 const FormularioDatosContacto = ({ idEmpleado }) => {
   const navigate = useNavigate();
@@ -60,149 +61,143 @@ const FormularioDatosContacto = ({ idEmpleado }) => {
   };
 
   const onSubmit = async (data) => {
-    await actualizarEmpleado(idEmpleado, data);
-    console.log(`Datos registrados para el empleado ID: ${idEmpleado}`, data);
-    navigate("/empleados3", { state: { id_empleado: idEmpleado } });
+    const {pais, estado, municipio, parroquia, ...datosEnviar} = data
+    console.log("Datos procesados para enviar:", datosEnviar);
+    const resultado = await actualizarEmpleado(idEmpleado, datosEnviar);
+    if (resultado) {
+      console.log("Empleado actualizado con éxito:", resultado);
+      navigate("/empleados3", { state: { id_empleado: idEmpleado } });
+    } else {
+      console.error("Error al actualizar el empleado:", errores);
+    }
   };
 
   return (
     <div className="bg-slate-200 p-8 rounded-xl mb-4">
 
-    <form onSubmit={handleSubmit(onSubmit)}>
-      {/* Campos de entrada */}
-
-      <div>
-        <Label htmlFor="telef_fijo">Teléfono Fijo</Label>
-        <Input
-          id="telef_fijo"
+      <form onSubmit={handleSubmit(onSubmit)}>
+        {/* Campos de entrada */}
+        <FormField
+          label="Teléfono Fijo"
           type="text"
-          {...register("Telef_fijo_e", {
-            required: "Este campo es requerido.",
-          })}
+          id="telef_fijo_e"
+          placeholder="0282-1234567"
+          register={register}
+          errors={errors}
         />
-        {errors.Telef_fijo_e && <p>{errors.Telef_fijo_e.message}</p>}
-      </div>
-      <div>
-        <Label htmlFor="telef_movil">Teléfono Móvil</Label>
-        <Input
-          id="telef_movil"
+        <FormField
+          label="Teléfono Móvil"
+          id="telef_movil_e"
           type="text"
-          {...register("Telef_movil_e", {
-            required: "Este campo es requerido.",
-          })}
+          placeholder="0412-1234567"
+          register={register}
+          errors={errors}
         />
-        {errors.Telef_movil_e && <p>{errors.Telef_movil_e.message}</p>}
-      </div>
-      <div>
-        <Label htmlFor="correo">Correo Electrónico</Label>
-        <Input
-          id="correo"
+        <FormField
+          label="Correo Electrónico"
+          id="correo_e"
           type="email"
-          {...register("Correo_e", { required: "Este campo es requerido." })}
+          placeholder="ejemplo@gmail.com"
+          register={register}
+          errors={errors}
         />
-      </div>
-      {errors.Correo_e && <p>{errors.Correo_e.message}</p>}
-      <div>
-        <Label htmlFor="Dirección">Dirección</Label>
-        <Input
-          id="Dirección"
-          type="text"
-          {...register("Direccion_e", { required: "Este campo es requerido." })}
+        <FormField
+          label="Dirección"
+          id="direccion_e"
+          placeholder="Calle 123, Casa 45"
+          register={register}
+          errors={errors}
         />
-      </div>
-      {errors.Direccion_e && <p>{errors.Direccion_e.message}</p>}
+        <div>
+          <Label htmlFor="pais">País</Label>
+          <Controller
+            name="pais"
+            control={control}
+            render={({ field }) => (
+              <select
+                className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 mt-1 mb-1 "
+                {...field}
+                onChange={(e) => handleSelectChange("pais", e.target.value)}
+              >
+                <option value="">Seleccione un País</option>
+                {paises.map((pais) => (
+                  <option key={pais.id_pais} value={pais.id_pais}>
+                    {pais.nombre_pais.trim()}
+                  </option>
+                ))}
+              </select>
+            )}
+          />
+        </div>
 
-      <div>
-        <Label htmlFor="pais">País</Label>
-        <Controller
-          name="pais"
-          control={control}
-          render={({ field }) => (
-            <select
-            className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 mt-1 mb-1 "
-              {...field}
-              onChange={(e) => handleSelectChange("pais", e.target.value)}
-            >
-              <option value="">Seleccione un País</option>
-              {paises.map((pais) => (
-                <option key={pais.id_pais} value={pais.id_pais}>
-                  {pais.nombre_pais.trim()}
-                </option>
-              ))}
-            </select>
-          )}
-        />
-      </div>
+        <div>
+          <Label htmlFor="estado">Estado</Label>
+          <Controller
+            name="estado"
+            control={control}
+            render={({ field }) => (
+              <select
+                className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 mt-1 mb-1"
+                {...field}
+                onChange={(e) => handleSelectChange("estado", e.target.value)}
+              >
+                <option value="">Seleccione un Estado</option>
+                {estados.map((estado) => (
+                  <option key={estado.id_estado} value={estado.id_estado}>
+                    {estado.nombre_es.trim()}
+                  </option>
+                ))}
+              </select>
+            )}
+          />
+        </div>
+        <div>
+          <Label htmlFor="municipio">Municipio</Label>
+          <Controller
+            name="municipio"
+            control={control}
+            render={({ field }) => (
+              <select
+                className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 mt-1 mb-1"
+                {...field}
+                onChange={(e) => handleSelectChange("municipio", e.target.value)}
+              >
+                <option value="">Seleccione un Municipio</option>
+                {municipios.map((municipio) => (
+                  <option key={municipio.id_municipio} value={municipio.id_municipio}>
+                    {municipio.nombre_mu.trim()}
+                  </option>
+                ))}
+              </select>
+            )}
+          />
+        </div>
+        <div className="mb-2">
+          <Label htmlFor="parroquia">Parroquia</Label>
+          <Controller
+            name="id_parroquia_id"
+            control={control}
+            render={({ field }) => (
+              <select
+                {...field}
+                className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 mt-1 mb-1"
+              >
+                <option value="">Seleccione una Parroquia</option>
+                {parroquias.map((parroquia) => (
+                  <option key={parroquia.id_parroquia} value={parroquia.id_parroquia}>
+                    {parroquia.nombre_pa.trim()}
+                  </option>
+                ))}
+              </select>
+            )}
+          />
+        </div>
 
-      <div>
-        <Label htmlFor="estado">Estado</Label>
-        <Controller
-          name="estado"
-          control={control}
-          render={({ field }) => (
-            <select
-            className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 mt-1 mb-1"
-              {...field}
-              onChange={(e) => handleSelectChange("estado", e.target.value)}
-            >
-              <option value="">Seleccione un Estado</option>
-              {estados.map((estado) => (
-                <option key={estado.id_estado} value={estado.id_estado}>
-                  {estado.nombre_es.trim()}
-                </option>
-              ))}
-            </select>
-          )}
-        />
-      </div>
-      <div>
-        <Label htmlFor="municipio">Municipio</Label>
-        <Controller
-          name="municipio"
-          control={control}
-          render={({ field }) => (
-            <select
-            className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 mt-1 mb-1"
-              {...field}
-              onChange={(e) => handleSelectChange("municipio", e.target.value)}
-            >
-              <option value="">Seleccione un Municipio</option>
-              {municipios.map((municipio) => (
-                <option key={municipio.id_municipio} value={municipio.id_municipio}>
-                  {municipio.nombre_mu.trim()}
-                </option>
-              ))}
-            </select>
-          )}
-        />
-      </div>
-      <div className="mb-2">
-        <Label htmlFor="parroquia">Parroquia</Label>
-        <Controller
-          name="parroquia"
-          control={control}
-          render={({ field }) => (
-            <select
-            className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 mt-1 mb-1"
-              {...field}
-              onChange={(e) => handleSelectChange("parroquia", e.target.value)}
-            >
-              <option value="">Seleccione una Parroquia</option>
-              {parroquias.map((parroquia) => (
-                <option key={parroquia.id_parroquia} value={parroquia.id_parroquia}>
-                  {parroquia.nombre_pa.trim()}
-                </option>
-              ))}
-            </select>
-          )}
-        />
-      </div>
+        <div className="flex justify-center sm:justify-normal">
 
-      <div className="flex justify-center sm:justify-normal">
-          
-      <Button type="submit">Registrar</Button>
-      </div>
-    </form>
+          <Button type="submit">Registrar</Button>
+        </div>
+      </form>
     </div>
   );
 };

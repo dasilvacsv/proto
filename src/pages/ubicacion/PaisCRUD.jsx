@@ -3,9 +3,9 @@ import Users from "@/components/admin/Users";
 import { RiArrowLeftSLine, RiArrowRightSLine } from "react-icons/ri";
 import CardTicket from "@/components/CardTicket";
 import { Link } from "react-router-dom";
+import Pais from "../../components/ubicacion/Pais"
 
-
-function PaginaRegistro() {
+function PaisCrud() {
   return (
       <LayoutAdmin>
     <div>
@@ -58,7 +58,7 @@ function PaginaRegistro() {
           <h5 className="text-gray-700">Fecha de Nacimiento</h5>
           <h5 className="text-gray-700">Sexo</h5>
         </div>
-        <Users />
+        <Pais />
       </div>
       </div>
         
@@ -67,4 +67,4 @@ function PaginaRegistro() {
   );
 }
 
-export default PaginaRegistro;
+export default PaisCrud;

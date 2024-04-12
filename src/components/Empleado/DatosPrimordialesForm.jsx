@@ -6,16 +6,16 @@ import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { useNavigate } from "react-router-dom";
 import useEmployeeStore from "@/store/empleadoStore.js";
+import FormField from "./FormField";
 
-// Validation Schema
 const schema = yup
   .object({
-    Cedula_e: yup.string().required("Por favor, indica tu cédula."),
-    Nombre1_e: yup.string().required("Por favor, indica tu primer nombre."),
-    Apellido1_e: yup.string().required("Por favor, indica tu primer apellido."),
-    Fecha_nac_e: yup
+    cedula_e: yup.string().required("Por favor, indique su cédula."),
+    nombre1_e: yup.string().required("Por favor, indique su primer nombre."),
+    apellido1_e: yup.string().required("Por favor, indique su primer apellido."),
+    fecha_nac_e: yup
       .string()
-      .required("Por favor, indica tu fecha de nacimiento"),
+      .required("Por favor, indique su fecha de nacimiento"),
   })
   .required();
 
@@ -29,17 +29,19 @@ function FormularioDatosPrimordiales() {
   } = useForm({
     resolver: yupResolver(schema),
   });
-  const { registrarEmpleado } = useEmployeeStore((state) => ({
+  const { registrarEmpleado, errores } = useEmployeeStore((state) => ({
     registrarEmpleado: state.registrarEmpleado,
     clearErrors: state.clearErrors,
+    errores: state.errores
   }));
 
   const onSubmit = async (data) => {
     const datosProcesados = {
       ...data,
-      Nombre2_e: data.Nombre2_e || null,
-      Apellido2_e: data.Apellido2_e || null,
+      nombre2_e: data.nombre2_e || null,
+      apellido2_e: data.apellido2_e || null,
     };
+    console.log(datosProcesados);
     const user = await registrarEmpleado(datosProcesados);
     if (user != null) {
       console.log("Empleado creado:", user);
@@ -50,73 +52,79 @@ function FormularioDatosPrimordiales() {
 
   return (
     <div className="bg-slate-200 p-8 rounded-xl mb-4">
-    <form onSubmit={handleSubmit(onSubmit)}>
-      
-      <div>
-        <Label htmlFor="cedula">Cédula <span className="text-red-500">*</span></Label>
-        <Input id="cedula" type="text" placeholder="V12345678" {...register("Cedula_e")} />
-        {errors.Cedula_e?.message && <p>{errors.Cedula_e.message}</p>}
-      </div>
-      <div>
-        <Label htmlFor="nombre1">Primer Nombre <span className="text-red-500">*</span></Label>
-        <Input id="nombre1" type="text" placeholder="Primer Nombre" {...register("Nombre1_e")} />
-        {errors.Nombre1_e?.message && <p>{errors.Nombre1_e.message}</p>}
-      </div>
-      <div>
-        <Label htmlFor="nombre2">Segundo Nombre</Label>
-        <Input id="nombre2" type="text" placeholder="Segundo Nombre" {...register("Nombre2_e")} />
-      </div>
-      <div>
-        <Label htmlFor="apellido1">Primer Apellido <span className="text-red-500">*</span></Label>
-        <Input
-          id="apellido1"
+      <form onSubmit={handleSubmit(onSubmit)}>
+      {errores && errores.message && <div className="font-semibold text-red-700 text-center">{errores.message}</div>}
+        <FormField
+          label="Cédula de Identidad"
+          type="text"
+          id="cedula_e"
+          placeholder="V23547895"
+          register={register}
+          errors={errors}
+        />
+        <FormField
+          label="Primer Nombre"
+          type="text"
+          id="nombre1_e"
+          placeholder="Primer Nombre"
+          register={register}
+          errors={errors}
+        />
+        <FormField
+          label="Segundo Nombre"
+          type="text"
+          id="nombre2_e"
+          placeholder="Segundo Nombre"
+          register={register}
+          errors={errors}
+        />
+        <FormField
+          label="Primer Apellido"
+          id="apellido1_e"
           type="text"
           placeholder="Primer Apellido"
-          {...register("Apellido1_e", { required: "Este campo es requerido." })}
+          register={register}
+          errors={errors}
         />
-        {errors.Apellido1_e && <p>{errors.Apellido1_e.message}</p>}
-      </div>
-      <div>
-        <Label htmlFor="apellido2">Segundo Apellido</Label>
-        <Input id="apellido2" type="text" placeholder="Segundo Apellido" {...register("Apellido2_e")} />
-      </div>
-      <div>
-        <Label htmlFor="fecha_nac">Fecha de Nacimiento <span className="text-red-500">*</span></Label>
-        <Input
-          id="fecha_nac"
-          type="date"
-          {...register("Fecha_nac_e", { required: "Este campo es requerido." })}
-        />
-      </div>
-      {errors.Fecha_nac_e && <p>{errors.Fecha_nac_e.message}</p>}
-
-      <div>
-        <Label htmlFor="sexo">
-          Sexo <span className="text-red-500">*</span>
-        </Label>
-       {/*  <Input
-          id="sexo"
+        <FormField
+          label="Segundo Apellido"
+          id="apellido2_e"
           type="text"
-          {...register("Sexo_e", { required: "Este campo es requerido." })}
-        /> */}
-        <select className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 mt-1 mb-1">
-        <option className="text-gray-700" value="Seleccione su sexo">
-            Seleccione su sexo
-          </option>
-          <option className="text-gray-700" value="Masculino">
-            Masculino
-          </option>
-          <option className="text-gray-700" value="Femenino">
-            Femenino
-          </option>
-        </select>
-      </div>
-      {errors.Sexo_e && <p>{errors.Sexo_e.message}</p>}
+          placeholder="Segundo Apellido"
+          register={register}
+          errors={errors}
+        />
+        <FormField
+          label="Fecha de Nacimiento"
+          id="fecha_nac_e"
+          type="date"
+          register={register}
+          errors={errors}
+        />
+        <div>
+          <Label htmlFor="sexo">
+            Sexo <span className="text-red-500">*</span>
+          </Label>
+          <select
+            {...register("sexo_e")}
+            className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 mt-1 mb-1"
+          >
+            <option className="text-gray-700" value="">
+              Seleccione su sexo
+            </option>
+            <option className="text-gray-700" value="Masculino">
+              Masculino
+            </option>
+            <option className="text-gray-700" value="Femenino">
+              Femenino
+            </option>
+          </select>
+        </div>
 
-      <div className="flex justify-center py-3">
-        <Button type="submit">Registrar</Button>
-      </div>
-    </form>
+        <div className="flex justify-center py-3">
+          <Button type="submit">Registrar</Button>
+        </div>
+      </form>
     </div>
   );
 }

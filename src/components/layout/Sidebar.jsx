@@ -47,7 +47,7 @@ const Sidebar = () => {
           icon: RiEarthLine, 
           submenu: [
             { name: 'País', path: '/pais' },
-            { name: 'Estado', path: '/pais' },
+            { name: 'Estado', path: '/estado' },
             { name: 'Municipio', path: '/pais' },
             { name: 'Parroquia', path: '/pais' },
           ],
@@ -74,17 +74,18 @@ const Sidebar = () => {
           name: 'Usuarios',
           icon: FaFingerprint,
           submenu: [
-            { name: 'Registro', path: '/biometrico' },
-            { name: 'Lista', path: '/registro' },
+            { name: 'Creacion', path: '/bio/creacion' },
+            { name: 'Consulta', path: '/bio/usuarios' },
+            { name: 'Buscar', path: '/bio/usuarios' },
           ],
         },
         {
           name: 'Asistencia',
           icon: FaUsers,
           submenu: [
-            { name: 'Tiempo Real', path: '/biometrico' },
-            { name: 'Lista', path: '/biometrico' },
-            { name: 'Manual', path: '/registro' },
+            { name: 'Tiempo RealWS', path: '/bio/asistenciaRT' },
+            { name: 'Registro', path: '/bio/asistencia' },
+            { name: 'Borrar', path: '/bio/borrarasis' },
           ],
         },
       ],
