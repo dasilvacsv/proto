@@ -38,30 +38,32 @@ const FormularioDatosContacto = ({ idEmpleado }) => {
 
   // Manejo de cambio de selección
   const handleSelectChange = (name, value) => {
-    setValue(name, value);
+    setValue(name, value, { shouldValidate: true });
     switch (name) {
       case "pais":
         cargarEstadosPorPaisId(value);
         setValue("estado", "");
         setValue("municipio", "");
-        setValue("parroquia", "");
+        setValue("id_parr_id", "");
         break;
       case "estado":
         cargarMunicipiosPorEstadoId(value);
         setValue("municipio", "");
-        setValue("parroquia", "");
+        setValue("id_parr_id", "");
         break;
       case "municipio":
         cargarParroquiasPorMunicipioId(value);
-        setValue("parroquia", "");
-        break;
-      default:
+        setValue("id_parr_id", "");
         break;
     }
+  
   };
 
   const onSubmit = async (data) => {
-    const {pais, estado, municipio, parroquia, ...datosEnviar} = data
+    const id_parr_id = data.parroquia;
+    const { pais, estado, municipio, ...datosEnviar } = data
+    const datosfinales = (idEmpleado, datosEnviar, id_parr_id);
+    console.log(datosfinales);
     console.log("Datos procesados para enviar:", datosEnviar);
     const resultado = await actualizarEmpleado(idEmpleado, datosEnviar);
     if (resultado) {
@@ -81,7 +83,7 @@ const FormularioDatosContacto = ({ idEmpleado }) => {
           label="Teléfono Fijo"
           type="text"
           id="telef_fijo_e"
-          placeholder="0282-1234567"
+          placeholder="02821234567"
           register={register}
           errors={errors}
         />
@@ -89,7 +91,7 @@ const FormularioDatosContacto = ({ idEmpleado }) => {
           label="Teléfono Móvil"
           id="telef_movil_e"
           type="text"
-          placeholder="0412-1234567"
+          placeholder="04121234567"
           register={register}
           errors={errors}
         />
@@ -172,26 +174,28 @@ const FormularioDatosContacto = ({ idEmpleado }) => {
             )}
           />
         </div>
-        <div className="mb-2">
-          <Label htmlFor="parroquia">Parroquia</Label>
-          <Controller
-            name="id_parroquia_id"
-            control={control}
-            render={({ field }) => (
-              <select
-                {...field}
-                className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 mt-1 mb-1"
-              >
-                <option value="">Seleccione una Parroquia</option>
-                {parroquias.map((parroquia) => (
-                  <option key={parroquia.id_parroquia} value={parroquia.id_parroquia}>
-                    {parroquia.nombre_pa.trim()}
-                  </option>
-                ))}
-              </select>
-            )}
-          />
-        </div>
+        <Label htmlFor="id_parr_id">Parroquia</Label>
+        <Controller
+          name="id_parr_id"
+          control={control}
+          render={({ field }) => (
+            <select
+              {...field}
+              className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 mt-1 mb-1"
+              onChange={(e) => {
+                field.onChange(e);
+                handleSelectChange("id_parr_id", e.target.value);
+              }}
+            >
+              <option value="">Seleccione una Parroquia</option>
+              {parroquias.map((parroquia) => (
+                <option key={parroquia.id_parroquia} value={parroquia.id_parroquia}>
+                  {parroquia.nombre_pa.trim()}
+                </option>
+              ))}
+            </select>
+          )}
+        />
 
         <div className="flex justify-center sm:justify-normal">
 

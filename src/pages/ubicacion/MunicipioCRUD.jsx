@@ -4,6 +4,7 @@ import { RiArrowLeftSLine, RiArrowRightSLine } from "react-icons/ri";
 import CardTicket from "@/components/CardTicket";
 import { Link } from "react-router-dom";
 import Estado from "../../components/ubicacion/Estado"
+import Municipio from "../../components/ubicacion/Municipio"
 
 function EstadoCrud() {
   return (
@@ -58,7 +59,7 @@ function EstadoCrud() {
           <h5 className="text-gray-700">Fecha de Nacimiento</h5>
           <h5 className="text-gray-700">Sexo</h5>
         </div>
-        <Estado />
+        <Municipio />
       </div>
       </div>
         

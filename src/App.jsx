@@ -16,6 +16,7 @@ import BorrarAsistenciaBio from "./pages/biometrico/BorrarAsistenciaBio";
 import CreacionUsuariosBio from "./pages/biometrico/CreacionUsuariosBio";
 import PaisCrud from "./pages/ubicacion/PaisCRUD";
 import EstadoCrud from "./pages/ubicacion/EstadoCRUD";
+import MunicipioCrud from "./pages/ubicacion/MunicipioCRUD"
 import axios from './api/axios'; 
 
 axios.interceptors.request.use(
@@ -60,6 +61,7 @@ function App() {
       {/* Ubicacion Routes */}
       <Route path="/pais" element={<PaisCrud />} />
       <Route path="/estado" element={<EstadoCrud /> } />
+      <Route path="/municipio" element={<MunicipioCrud />} />
       {/* Biometrico routes */}
       <Route path="/bio/usuarios" element={<GestionUsuariosBio />} />
       <Route path="/bio/asistencia" element={<GestionAsistenciaBio />} />

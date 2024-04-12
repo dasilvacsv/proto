@@ -112,11 +112,11 @@ function FormularioDatosPrimordiales() {
             <option className="text-gray-700" value="">
               Seleccione su sexo
             </option>
-            <option className="text-gray-700" value="Masculino">
-              Masculino
+            <option className="text-gray-700" value="M">
+              M
             </option>
-            <option className="text-gray-700" value="Femenino">
-              Femenino
+            <option className="text-gray-700" value="F">
+              F
             </option>
           </select>
         </div>

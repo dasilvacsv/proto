@@ -48,8 +48,8 @@ const Sidebar = () => {
           submenu: [
             { name: 'País', path: '/pais' },
             { name: 'Estado', path: '/estado' },
-            { name: 'Municipio', path: '/pais' },
-            { name: 'Parroquia', path: '/pais' },
+            { name: 'Municipio', path: '/municipio' },
+            { name: 'Parroquia', path: '/parroquia' },
           ],
         },
       ],

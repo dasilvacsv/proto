@@ -28,34 +28,59 @@ const useLocationStore = create((set) => ({
     try {
       const respuesta = await axios.get('ubicacion/estado');
       console.log(respuesta.data); 
-      set({ estadps: respuesta.data, cargando: false });
+      set({ estados: respuesta.data, cargando: false });
     } catch (error) {
       set({ error: error.message, cargando: false });
     }
   },
 
+  cargarMunicipios: async () => {
+    set({ cargando: true });
+    try {
+      const respuesta = await axios.get('ubicacion/municipio');
+      console.log(respuesta.data); 
+      set({ municipios: respuesta.data, cargando: false });
+    } catch (error) {
+      set({ error: error.message, cargando: false });
+    }
+  },
+
+  cargarParroquia: async () => {
+    set({ cargando: true });
+    try {
+      const respuesta = await axios.get('ubicacion/parroquia');
+      console.log(respuesta.data); 
+      set({ parroquias: respuesta.data, cargando: false });
+    } catch (error) {
+      set({ error: error.message, cargando: false });
+    }
+  },
 
 
   cargarEstadosPorPaisId: async (paisId) => {
     set({ cargando: true });
     try {
       const respuesta = await axios.get(`ubicacion/estado/by-pais/${paisId}`);
-      console.log(respuesta.data);
-      set({ estados: respuesta.data, cargando: false });
+      if (respuesta.data.length === 0) {
+        console.log("No se encontraron estados para el país seleccionado.");
+      }
+      set({ estados: respuesta.data, municipios: [], parroquias: [], cargando: false });
     } catch (error) {
       console.error(`Error al cargar estados para el país ${paisId}:`, error);
-      set({ error: error.message, cargando: false });
+      set({ estados: [], municipios: [], parroquias: [], error: error.message, cargando: false });
     }
   },
   cargarMunicipiosPorEstadoId: async (estadoId) => {
     set({ cargando: true });
     try {
       const respuesta = await axios.get(`ubicacion/municipio/by-estado/${estadoId}`);
-      console.log(respuesta.data);
-      set({ municipios: respuesta.data, cargando: false });
+      if (respuesta.data.length === 0) {
+        console.log("No se encontraron municipios para el estado seleccionado.");
+      }
+      set({ municipios: respuesta.data, parroquias: [], cargando: false });
     } catch (error) {
       console.error(`Error al cargar municipios para el estado ${estadoId}:`, error);
-      set({ error: error.message, cargando: false });
+      set({ municipios: [], parroquias: [], error: error.message, cargando: false });
     }
   },
 
@@ -63,11 +88,13 @@ const useLocationStore = create((set) => ({
     set({ cargando: true });
     try {
       const respuesta = await axios.get(`ubicacion/parroquia/by-municipio/${municipioId}`);
-      console.log(respuesta.data);
+      if (respuesta.data.length === 0) {
+        console.log("No se encontraron parroquias para el municipio seleccionado.");
+      }
       set({ parroquias: respuesta.data, cargando: false });
     } catch (error) {
-      console.error(`Error al cargar municipios para el estado ${municipioId}:`, error);
-      set({ error: error.message, cargando: false });
+      console.error(`Error al cargar parroquias para el municipio ${municipioId}:`, error);
+      set({ parroquias: [], error: error.message, cargando: false });
     }
   },
 
@@ -81,20 +108,24 @@ const useLocationStore = create((set) => ({
       set({ error: error.message, cargando: false });
     }
   },
-  // Método adicional para limpiar errores
-  limpiarErrores: () => set({ error: null }),
+  
 
   cargarCargosPorDepartamentoId: async (departamentoId) => {
     set({ cargando: true });
     try {
       const respuesta = await axios.get(`dpto/cargo/by-departamento/${departamentoId}`);
-      console.log(respuesta.data);
+      if (respuesta.data.length === 0) {
+        console.log("No se encontraron cargos para el departamento seleccionado.");
+      }
       set({ cargos: respuesta.data, cargando: false });
     } catch (error) {
-      console.error(`Error al cargar estados para el país ${departamentoId}:`, error);
-      set({ error: error.message, cargando: false });
+      console.error(`Error al cargar cargos para el departamento ${departamentoId}:`, error);
+      set({ cargos: [], error: error.message, cargando: false });
     }
   },
+  
+  // Método adicional para limpiar errores
+  limpiarErrores: () => set({ error: null }),
 }));
 
 
